@@ -25,7 +25,7 @@ def create_app(model):
             atts = pe_att_ext.extract()
             prediction = model.predict(atts, verbose=0)
             print(prediction)
-            result = 1 if prediction[0][0] > 0.89 else 0
+            result = 1 if prediction[0][0] > 0.87 else 0
             print('LABEL = ', result)
         except Exception as e:
             result = 1

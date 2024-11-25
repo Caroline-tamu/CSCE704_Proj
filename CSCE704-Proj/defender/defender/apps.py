@@ -7,6 +7,7 @@ from defender.models.attribute_extractor import PEAttributeExtractor
 def create_app(model):
     app = Flask(__name__)
     app.config['model'] = model
+    model = load_model(app.config['model'], compile=False)
 
     # analyse a sample
     @app.route('/', methods=['POST'])
@@ -22,8 +23,6 @@ def create_app(model):
         try:
             pe_att_ext = PEAttributeExtractor(bytez)
             atts = pe_att_ext.extract()
-            model = load_model(app.config['model'], compile=False)
-            print("model load success")
             prediction = model.predict(atts, verbose=0)
             print(prediction)
             result = 1 if prediction[0][0] > 0.89 else 0
